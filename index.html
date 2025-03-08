@@ -1,1321 +1,758 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Ikigai Finder - Discover Your Purpose</title>
-
   <meta name="description" content="Discover your Ikigai with our interactive tool that combines what you love, what you're good at, what the world needs, and what you can be paid for. Explore the 67 human universals and find your purpose." />
-
   <meta name="keywords" content="Ikigai, Purpose, Human Universals, Quiz, Self-discovery, Personal Growth" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <!-- Google Fonts for a modern look -->
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-
   <style>
-
     /* Global Styles */
-
     body {
-
       font-family: 'Roboto', sans-serif;
-
       background-color: #f4f4f4;
-
       color: #333;
-
       margin: 0;
-
       padding: 0;
-
     }
-
-
 
     /* Header with flat blue color and contour */
-
     header {
-
       background-color: #007BFF;
-
       color: white;
-
       padding: 30px;
-
       text-align: center;
-
       border-bottom: 5px solid #0056b3;
-
     }
-
-
 
     section {
-
       padding: 20px;
-
       margin: 20px auto;
-
       max-width: 800px;
-
       background-color: #fff;
-
       border-radius: 8px;
-
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
     }
-
-
 
     h2 {
-
       color: #0056b3;
-
     }
-
-
 
     form {
-
       display: flex;
-
       flex-direction: column;
-
       gap: 15px;
-
     }
-
-
 
     .question-card {
-
       background-color: #e8f5e9;
-
       padding: 20px;
-
       border-radius: 8px;
-
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
       margin-bottom: 20px;
-
     }
-
-
 
     input[type="checkbox"] {
-
       margin-right: 10px;
-
     }
-
-
 
     input[type="text"],
-
     input[type="email"],
-
     textarea {
-
       padding: 10px;
-
       border: 1px solid #ccc;
-
       border-radius: 4px;
-
     }
-
-
 
     /* Button Styling with flat blue color */
-
     button {
-
       padding: 10px;
-
       background-color: #007BFF;
-
       color: white;
-
       border: none;
-
       border-radius: 4px;
-
       cursor: pointer;
-
       transition: background 0.3s ease;
-
     }
-
     button:hover {
-
       background-color: #0056b3;
-
     }
-
-
 
     .card {
-
       background-color: #e8f5e9;
-
       padding: 20px;
-
       border-radius: 8px;
-
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
     }
-
-
 
     footer {
-
       text-align: center;
-
       padding: 10px;
-
       background-color: #333;
-
       color: white;
-
     }
-
-
 
     #ikigaiChart {
-
       max-width: 400px;
-
       margin: 0 auto;
-
     }
-
-
 
     /* Slider container: question above slider */
-
     .slider-container {
-
       margin-bottom: 20px;
-
       display: flex;
-
       flex-direction: column;
-
     }
-
     .slider-container label {
-
       margin-bottom: 5px;
-
       font-weight: bold;
-
     }
-
-
 
     /* Smaller, more discrete slider styling */
-
     input[type="range"] {
-
       -webkit-appearance: none;
-
       width: 100%;
-
       height: 4px;
-
       border-radius: 2px;
-
       background-color: #cce5ff;
-
       outline: none;
-
     }
-
     input[type="range"]::-webkit-slider-thumb {
-
       -webkit-appearance: none;
-
       appearance: none;
-
       width: 15px;
-
       height: 15px;
-
       background-color: #fff;
-
       border: 2px solid #0056b3;
-
       border-radius: 50%;
-
       cursor: pointer;
-
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-
     }
-
     input[type="range"]::-moz-range-thumb {
-
       width: 15px;
-
       height: 15px;
-
       background-color: #fff;
-
       border: 2px solid #0056b3;
-
       border-radius: 50%;
-
       cursor: pointer;
-
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-
     }
-
-
 
     /* Slider value badge with flat blue color, reduced size */
-
     .slider-container span {
-
       background-color: #007BFF;
-
       border: 2px solid #ffffff;
-
       border-radius: 50%;
-
       width: 30px;
-
       height: 30px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       font-weight: bold;
-
       color: #ffffff;
-
       margin-top: 5px;
-
       font-size: 0.8rem;
-
     }
-
-
 
     /* Donate section styling using BTCPay integration */
-
     #donate {
-
       text-align: center;
-
       padding: 20px;
-
       background-color: #e8f5e9;
-
       border-radius: 8px;
-
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
     }
-
-
 
     /* Affiliate links section styling */
-
     #affiliate-links {
-
       background-color: #fff;
-
       padding: 20px;
-
       margin: 20px auto;
-
       max-width: 800px;
-
       border-radius: 8px;
-
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
     }
-
     #affiliate-links ul {
-
       list-style: none;
-
       padding: 0;
-
     }
-
     #affiliate-links li {
-
       margin-bottom: 10px;
-
     }
-
     #affiliate-links a {
-
       color: #007BFF;
-
       text-decoration: none;
-
       font-weight: 500;
-
       transition: color 0.3s ease;
-
     }
-
     #affiliate-links a:hover {
-
       color: #0056b3;
-
     }
-
-
 
     /* Contact Section: simple email link */
-
     #contact {
-
       text-align: center;
-
     }
-
     #contact a.email-link {
-
       color: #007BFF;
-
       text-decoration: none;
-
       font-weight: bold;
-
       font-size: 1.1rem;
-
       transition: color 0.3s ease;
-
     }
-
     #contact a.email-link:hover {
-
       color: #0056b3;
-
     }
-
-
 
     @media (max-width: 600px) {
-
       header h1 {
-
         font-size: 1.5rem;
-
       }
-
       section {
-
         padding: 10px;
-
       }
-
     }
-
   </style>
-
 </head>
-
 <body>
-
   <header>
-
     <h1>Find Your Ikigai</h1>
-
     <p>Discover your purpose and practically apply it through the 67 human universals to simply enjoy the simple gifts of life like breath and the taste of water, or to earn a living through your natural endowments and talents.</p>
-
   </header>
 
-
-
   <section id="ikigai-overview">
-
     <h2>What is Ikigai?</h2>
-
     <p>
-
       Ikigai is a Japanese concept that means "reason for being." It combines what you love, what you're good at, what the world needs, and what you can be paid for, to give you a well rounded sense of purpose in life.
-
     </p>
-
   </section>
-
-
 
   <section id="universals-overview">
-
     <h2>The 67 Human Universals</h2>
-
     <p>
-
       These are traits, behaviors, and cultural features shared by all human societies. They help us understand what makes us uniquely human. In this fast paced world with AI changing how we view ourselves as humans, there's a deeper search for our identity and whats trully meaningful to us.
-
     </p>
-
   </section>
-
-
 
   <section id="weighted-scoring">
-
     <h2>Weighted Scoring</h2>
-
     <p>Use the sliders below to indicate how important each attribute is to you.</p>
-
     <form id="weighted-scoring-form">
-
       <div class="slider-container">
-
         <label for="joy-slider">How important is being joyful for you? (1–10)</label>
-
         <input type="range" id="joy-slider" name="joy" min="1" max="10" value="5" />
-
         <span id="joy-value">5</span>
-
       </div>
-
       <div class="slider-container">
-
         <label for="good-at-slider">How important is being good at something for you? (1–10)</label>
-
         <input type="range" id="good-at-slider" name="good-at" min="1" max="10" value="5" />
-
         <span id="good-at-value">5</span>
-
       </div>
-
       <div class="slider-container">
-
         <label for="world-needs-slider">How important is the world's needs to you? (1–10)</label>
-
         <input type="range" id="world-needs-slider" name="world-needs" min="1" max="10" value="5" />
-
         <span id="world-needs-value">5</span>
-
       </div>
-
       <div class="slider-container">
-
         <label for="paid-for-slider">How important is getting paid for something to you? (1–10)</label>
-
         <input type="range" id="paid-for-slider" name="paid-for" min="1" max="10" value="5" />
-
         <span id="paid-for-value">5</span>
-
       </div>
-
       <div class="slider-container">
-
         <label for="fulfilled-slider">How important is feeling fulfilled to you? (1–10)</label>
-
         <input type="range" id="fulfilled-slider" name="fulfilled" min="1" max="10" value="5" />
-
         <span id="fulfilled-value">5</span>
-
       </div>
-
       <div class="slider-container">
-
         <label for="lose-time-slider">How important is losing track of time in an activity for you? (1–10)</label>
-
         <input type="range" id="lose-time-slider" name="lose-time" min="1" max="10" value="5" />
-
         <span id="lose-time-value">5</span>
-
       </div>
-
       <div class="slider-container">
-
         <label for="help-with-slider">How important is helping others for you? (1–10)</label>
-
         <input type="range" id="help-with-slider" name="help-with" min="1" max="10" value="5" />
-
         <span id="help-with-value">5</span>
-
       </div>
-
     </form>
-
   </section>
-
-
 
   <section id="quiz">
-
     <h2>Take the Ikigai Quiz</h2>
-
     <form id="ikigai-quiz">
-
       <div class="question-card">
-
         <h3>What brings you joy? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="joy" value="art" /> Art</div>
-
         <div><input type="checkbox" name="joy" value="music" /> Music</div>
-
         <div><input type="checkbox" name="joy" value="nature" /> Nature</div>
-
         <div><input type="checkbox" name="joy" value="teaching" /> Teaching</div>
-
         <div><input type="checkbox" name="joy" value="travel" /> Travel</div>
-
         <div><input type="checkbox" name="joy" value="writing" /> Writing</div>
-
         <div><input type="checkbox" name="joy" value="sports" /> Sports</div>
-
         <div><input type="checkbox" name="joy" value="others" /> Others</div>
-
       </div>
-
       <div class="question-card">
-
         <h3>What are you naturally good at? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="good-at" value="coding" /> Coding</div>
-
         <div><input type="checkbox" name="good-at" value="cooking" /> Cooking</div>
-
         <div><input type="checkbox" name="good-at" value="writing" /> Writing</div>
-
         <div><input type="checkbox" name="good-at" value="sports" /> Sports</div>
-
         <div><input type="checkbox" name="good-at" value="problem-solving" /> Problem Solving</div>
-
         <div><input type="checkbox" name="good-at" value="public-speaking" /> Public Speaking</div>
-
         <div><input type="checkbox" name="good-at" value="design" /> Design</div>
-
         <div><input type="checkbox" name="good-at" value="others" /> Others</div>
-
       </div>
-
       <div class="question-card">
-
         <h3>What does the world need that you care about? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="world-needs" value="education" /> Education</div>
-
         <div><input type="checkbox" name="world-needs" value="sustainability" /> Sustainability</div>
-
         <div><input type="checkbox" name="world-needs" value="healthcare" /> Healthcare</div>
-
         <div><input type="checkbox" name="world-needs" value="community" /> Community</div>
-
         <div><input type="checkbox" name="world-needs" value="innovation" /> Innovation</div>
-
         <div><input type="checkbox" name="world-needs" value="equality" /> Equality</div>
-
         <div><input type="checkbox" name="world-needs" value="art" /> Art</div>
-
         <div><input type="checkbox" name="world-needs" value="others" /> Others</div>
-
       </div>
-
       <div class="question-card">
-
         <h3>What can you get paid for? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="paid-for" value="consulting" /> Consulting</div>
-
         <div><input type="checkbox" name="paid-for" value="design" /> Design</div>
-
         <div><input type="checkbox" name="paid-for" value="writing" /> Writing</div>
-
         <div><input type="checkbox" name="paid-for" value="coaching" /> Coaching</div>
-
         <div><input type="checkbox" name="paid-for" value="engineering" /> Engineering</div>
-
         <div><input type="checkbox" name="paid-for" value="marketing" /> Marketing</div>
-
         <div><input type="checkbox" name="paid-for" value="teaching" /> Teaching</div>
-
         <div><input type="checkbox" name="paid-for" value="others" /> Others</div>
-
       </div>
-
       <div class="question-card">
-
         <h3>What makes you feel fulfilled? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="fulfilled" value="helping-others" /> Helping Others</div>
-
         <div><input type="checkbox" name="fulfilled" value="creating" /> Creating</div>
-
         <div><input type="checkbox" name="fulfilled" value="learning" /> Learning</div>
-
         <div><input type="checkbox" name="fulfilled" value="teaching" /> Teaching</div>
-
         <div><input type="checkbox" name="fulfilled" value="exploring" /> Exploring</div>
-
         <div><input type="checkbox" name="fulfilled" value="connecting" /> Connecting</div>
-
         <div><input type="checkbox" name="fulfilled" value="solving-problems" /> Solving Problems</div>
-
         <div><input type="checkbox" name="fulfilled" value="others" /> Others</div>
-
       </div>
-
       <div class="question-card">
-
         <h3>Which activity makes you lose track of time? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="lose-time" value="reading" /> Reading</div>
-
         <div><input type="checkbox" name="lose-time" value="writing" /> Writing</div>
-
         <div><input type="checkbox" name="lose-time" value="coding" /> Coding</div>
-
         <div><input type="checkbox" name="lose-time" value="painting" /> Painting</div>
-
         <div><input type="checkbox" name="lose-time" value="music" /> Music</div>
-
         <div><input type="checkbox" name="lose-time" value="sports" /> Sports</div>
-
         <div><input type="checkbox" name="lose-time" value="gaming" /> Gaming</div>
-
         <div><input type="checkbox" name="lose-time" value="others" /> Others</div>
-
       </div>
-
       <div class="question-card">
-
         <h3>What do people often ask you for help with? (Select all that apply)</h3>
-
         <div><input type="checkbox" name="help-with" value="advice" /> Advice</div>
-
         <div><input type="checkbox" name="help-with" value="problem-solving" /> Problem Solving</div>
-
         <div><input type="checkbox" name="help-with" value="teaching" /> Teaching</div>
-
         <div><input type="checkbox" name="help-with" value="design" /> Design</div>
-
         <div><input type="checkbox" name="help-with" value="writing" /> Writing</div>
-
         <div><input type="checkbox" name="help-with" value="organizing" /> Organizing</div>
-
         <div><input type="checkbox" name="help-with" value="technical-help" /> Technical Help</div>
-
         <div><input type="checkbox" name="help-with" value="others" /> Others</div>
-
       </div>
-
       <button type="submit">Calculate My Ikigai</button>
-
     </form>
-
   </section>
-
-
 
   <section id="results" class="animate__animated animate__fadeIn">
-
     <h2>Your Ikigai Score</h2>
-
     <div id="score"></div>
-
     <h2>Recommended Universals</h2>
-
     <div id="recommendation" class="card"></div>
-
     <h2>Your Ikigai Breakdown</h2>
-
     <div class="card">
-
       <canvas id="ikigaiChart"></canvas>
-
     </div>
-
     <h2>Time Allocation Suggestions</h2>
-
     <div id="time-allocation" class="card"></div>
-
     <button id="save-results">Save Results</button>
-
     <button id="share-results">Share Results</button>
-
   </section>
-
-
 
   <!-- BTCPay Donation Form Integration -->
-
   <section id="donate">
-
     <h2>Support This Project</h2>
-
     <p>If you found this website helpful, consider donating Bitcoin to support its development.</p>
-
-    <form id="btcpay-form" action="https://btcpay.example.com/api/v1/invoices" method="POST" target="_blank">
-
-      <!-- Replace YOUR_STORE_ID with your actual store ID from BTCPay Server -->
-
-      <input type="hidden" name="storeId" value="YOUR_STORE_ID" />
-
-      <!-- Set a default donation amount (update if you wish to allow user input) -->
-
-      <input type="hidden" name="price" value="0.001" />
-
-      <input type="hidden" name="currency" value="BTC" />
-
-      <input type="hidden" name="orderId" value="Donation-IkigaiFinder" />
-
-      <input type="hidden" name="itemDesc" value="Donation for Ikigai Finder" />
-
-      <!-- Update notificationURL if you have a server-side endpoint for donation notifications -->
-
-      <input type="hidden" name="notificationURL" value="https://yourwebsite.com/notification" />
-
-      <button type="submit">Donate Now</button>
-
-    </form>
-
+    <!-- Begin BTCPay Button Code -->
+    <style>
+      .btcpay-form { display: inline-flex; align-items: center; justify-content: center; } .btcpay-form--inline { flex-direction: row; } .btcpay-form--block { flex-direction: column; } .btcpay-form--inline .submit { margin-left: 15px; } .btcpay-form--block select { margin-bottom: 10px; } .btcpay-form .btcpay-custom-container{ text-align: center; }.btcpay-custom { display: flex; align-items: center; justify-content: center; } .btcpay-form .plus-minus { cursor:pointer; font-size:25px; line-height: 25px; background: #DFE0E1; height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto 5px; display: inline-flex; justify-content: center; } .btcpay-form select { -moz-appearance: none; -webkit-appearance: none; appearance: none; color: currentColor; background: transparent; border:1px solid transparent; display: block; padding: 1px; margin-left: auto; margin-right: auto; font-size: 11px; cursor: pointer; } .btcpay-form select:hover { border-color: #ccc; } .btcpay-form option { color: #000; background: rgba(0,0,0,.1); } .btcpay-input-price { -moz-appearance: textfield; border: none; box-shadow: none; text-align: center; font-size: 25px; margin: auto; border-radius: 5px; line-height: 35px; background: #fff; }
+      .btcpay-input-price::-webkit-outer-spin-button, .btcpay-input-price::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+    <style>
+      input[type=range].btcpay-input-range { -webkit-appearance:none; width:100%; background: transparent; } input[type=range].btcpay-input-range:focus { outline:0; } input[type=range].btcpay-input-range::-webkit-slider-runnable-track { width:100%; height:3.1px; cursor:pointer; box-shadow:0 0 1.7px #020,0 0 0 #003c00; background:#f3f3f3; border-radius:1px; border:0; } input[type=range].btcpay-input-range::-webkit-slider-thumb { box-shadow:none; border:2.5px solid #cedc21; height:22px; width:22px; border-radius:50%; background:#0f3723; cursor:pointer; -webkit-appearance:none; margin-top:-9.45px } input[type=range].btcpay-input-range:focus::-webkit-slider-runnable-track { background:#fff; } input[type=range].btcpay-input-range::-moz-range-track { width:100%; height:3.1px; cursor:pointer; box-shadow:0 0 1.7px #020,0 0 0 #003c00; background:#f3f3f3; border-radius:1px; border:0; } input[type=range].btcpay-input-range::-moz-range-thumb { box-shadow:none; border:2.5px solid #cedc21; height:22px; width:22px; border-radius:50%; background:#0f3723; cursor:pointer; } input[type=range].btcpay-input-range::-ms-track { width:100%; height:3.1px; cursor:pointer; background:0 0; border-color:transparent; color:transparent; } input[type=range].btcpay-input-range::-ms-fill-lower { background:#e6e6e6; border:0; border-radius:2px; box-shadow:0 0 1.7px #020,0 0 0 #003c00; } input[type=range].btcpay-input-range::-ms-fill-upper { background:#f3f3f3; border:0; border-radius:2px; box-shadow:0 0 1.7px #020,0 0 0 #003c00; } input[type=range].btcpay-input-range::-ms-thumb { box-shadow:none; border:2.5px solid #cedc21; height:22px; width:22px; border-radius:50%; background:#0f3723; cursor:pointer; height:3.1px; } input[type=range].btcpay-input-range:focus::-ms-fill-lower { background:#f3f3f3; } input[type=range].btcpay-input-range:focus::-ms-fill-upper { background:#fff; }
+    </style>
+    <form method="POST" action="https://mainnet.demo.btcpayserver.org/api/v1/invoices" class="btcpay-form btcpay-form--block">
+      <input type="hidden" name="storeId" value="6CgmwaDyPURxF8Bm7DTukTvi7J7joEV2HZ4ioSanC1SF" />
+      <input type="hidden" name="jsonResponse" value="true" />
+      <input type="hidden" name="browserRedirect" value="https://topikigai.com/" />
+      <input type="hidden" name="notifyEmail" value="mail@topikigai.com" />
+      <div class="btcpay-custom-container">
+          <input class="btcpay-input-price" type="number" name="price" min="1" max="20" step="1" value="1" data-price="1" style="width:209px;" />
+        <select name="currency">
+          <option value="USD" selected>USD</option>
+          <option value="GBP">GBP</option>
+          <option value="EUR">EUR</option>
+          <option value="BTC">BTC</option>
+        </select>
+        <input type="range" class="btcpay-input-range" min="1" max="20" step="1" value="1" style="width:209px;margin-bottom:15px;" />
+      </div>
+    <button type="submit" class="submit" name="submit" style="min-width:209px;min-height:57px;border-radius:4px;border-style:none;background-color:#0f3b21;cursor:pointer;" title="Pay with BTCPay Server, a Self-Hosted Bitcoin Payment Processor"><span style="color:#fff">Donate using</span>
+    <img src="https://mainnet.demo.btcpayserver.org/img/paybutton/logo.svg" style="height:57px;display:inline-block;padding:5% 0 5% 5px;vertical-align:middle;">
+    </button></form>
+    <script>
+        if (!window.btcpay) {
+            var script = document.createElement('script');
+            script.src = "https://mainnet.demo.btcpayserver.org/modal/btcpay.js";
+            document.getElementsByTagName('head')[0].append(script);
+        }
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200 && this.responseText) {
+                    window.btcpay.appendInvoiceFrame(JSON.parse(this.responseText).invoiceId);
+                }
+            };
+            xhttp.open('POST', event.target.getAttribute('action'), true);
+            xhttp.send(new FormData(event.target));
+        }
+        document.querySelectorAll(".btcpay-form").forEach(function(el) {
+            if (!el.dataset.initialized) {
+                el.addEventListener('submit', handleFormSubmit);
+                el.dataset.initialized = true;
+            }
+        });
+        
+        function handleSliderChange(event) {
+            event.preventDefault();
+            const root = event.target.closest('.btcpay-form');
+            const el = root.querySelector('.btcpay-input-price');
+            const price = parseInt(el.value);
+            const min = parseInt(event.target.getAttribute('min')) || 1;
+            const max = parseInt(event.target.getAttribute('max'));
+            if (price < min) { 
+                el.value = min;
+            } else if (price > max) {
+                el.value = max;
+            } 
+            root.querySelector('.btcpay-input-range').value = el.value;
+        }
+        function handleSliderInput(event) {
+            event.target.closest('.btcpay-form').querySelector('.btcpay-input-price').value = event.target.value;
+        }
+        document.querySelectorAll(".btcpay-form .btcpay-input-range").forEach(function(el) {
+            if (!el.dataset.initialized) {
+                el.addEventListener('input', handleSliderInput);
+                el.dataset.initialized = true;
+            }
+        });
+        document.querySelectorAll(".btcpay-form .btcpay-input-price").forEach(function(el) {
+            if (!el.dataset.initialized) {
+                el.addEventListener('change', handleSliderChange);
+                el.dataset.initialized = true;
+            }
+        });
+        
+        function handlePriceInput(event) {
+            event.preventDefault();
+            const root = event.target.closest('.btcpay-form');
+            const price = parseInt(event.target.dataset.price);
+            if (isNaN(event.target.value)) root.querySelector('.btcpay-input-price').value = price;
+            const min = parseInt(event.target.getAttribute('min')) || 1;
+            const max = parseInt(event.target.getAttribute('max'));
+            if (event.target.value < min) {
+                event.target.value = min;
+            } else if (event.target.value > max) { 
+                event.target.value = max;
+            }
+        }
+        document.querySelectorAll(".btcpay-form .btcpay-input-price").forEach(function(el) {
+            if (!el.dataset.initialized) {
+                el.addEventListener('input', handlePriceInput);
+                el.dataset.initialized = true;
+            }
+        });
+    </script>
+    <!-- End BTCPay Button Code -->
   </section>
 
-
-
-  <!-- Affiliate Links Section -->
-
+<!-- Affiliate Links Section -->
   <section id="affiliate-links">
-
     <h2>Recommended Resources</h2>
-
     <p>Explore these hand-picked resources to further your journey. (Affiliate links)</p>
 
-    <ul>
+    <!-- Amazon Affiliate Card -->
+    <div class="card">
+      <h3>Ikigai: The Japanese Secret to a Long and Happy Life</h3>
+      <p>Discover the secrets of Ikigai with this bestselling book. Perfect for anyone seeking purpose and fulfillment.</p>
+      <a href="https://www.amazon.com/Ikigai-Japanese-Secret-Long-Happy/dp/0143130722?tag=your-affiliate-id" target="_blank" class="button">Get the Book</a>
+    </div>
 
-      <li><a href="https://www.example.com/resource1" target="_blank">Resource 1</a></li>
+     <!-- More affiliates to be added here.-->
 
-      <li><a href="https://www.example.com/resource2" target="_blank">Resource 2</a></li>
 
-      <li><a href="https://www.example.com/resource3" target="_blank">Resource 3</a></li>
 
-    </ul>
-
+    <p><em>Disclosure: Some links are affiliate links, which help support this website at no extra cost to you.</em></p>
   </section>
-
-
 
   <!-- Simplified Contact Section with Email Link -->
-
   <section id="contact">
-
     <h2>Contact Us</h2>
-
     <p>Have questions or feedback? Click the email below to reach out:</p>
-
     <p><a href="mailto:mail@topikigai.com" class="email-link">mail@topikigai.com</a></p>
- 
   </section>
 
-
-
   <footer>
-
     <p>© 2025 TopIkigai. All rights reserved.</p>
-
   </footer>
 
-
-
   <script>
-
     // JavaScript Logic
-
     const universals = [
-
       "Age-grading", "Athletic sports", "Bodily adornment", "Calendar", "Cleanliness training",
-
       "Community organisation", "Cooking", "Cooperative labor", "Cosmology", "Courtship",
-
       "Dancing", "Decorative art", "Divination", "Division of labor", "Dream interpretation",
-
       "Education", "Eschatology", "Ethics", "Ethno-botany", "Etiquette", "Faith healing",
-
       "Family feasting", "Fire-making", "Folklore", "Food taboos", "Funeral rites", "Games",
-
       "Gestures", "Gift-giving", "Government", "Greetings", "Hair styles", "Hospitality",
-
       "Housing", "Hygiene", "Incest taboos", "Inheritance rules", "Joking", "Kin groups",
-
       "Kinship nomenclature", "Language", "Law", "Luck superstitions", "Magic", "Marriage",
-
       "Mealtimes", "Medicine", "Obstetrics", "Penal sanctions", "Personal names",
-
       "Population policy", "Postnatal care", "Pregnancy usages", "Property rights",
-
       "Propitiation of supernatural beings", "Puberty customs", "Religious ritual",
-
       "Residence rules", "Sexual restrictions", "Soul concepts", "Status differentiation",
-
       "Surgery", "Tool-making", "Trade", "Visiting", "Weather control", "Weaving"
-
     ];
-
-
 
     let ikigaiChart; // Variable to store the chart instance
 
-
-
     // Update slider values dynamically
-
     const sliders = document.querySelectorAll('input[type="range"]');
-
     sliders.forEach(slider => {
-
       const valueSpan = document.getElementById(`${slider.name}-value`);
-
       slider.addEventListener("input", () => {
-
         valueSpan.textContent = slider.value;
-
       });
-
     });
 
-
-
     document.getElementById("ikigai-quiz").addEventListener("submit", function (e) {
-
       e.preventDefault();
 
-
-
       // Get user inputs
-
       const joy = Array.from(document.querySelectorAll('input[name="joy"]:checked')).map(cb => cb.value);
-
       const goodAt = Array.from(document.querySelectorAll('input[name="good-at"]:checked')).map(cb => cb.value);
-
       const worldNeeds = Array.from(document.querySelectorAll('input[name="world-needs"]:checked')).map(cb => cb.value);
-
       const paidFor = Array.from(document.querySelectorAll('input[name="paid-for"]:checked')).map(cb => cb.value);
-
       const fulfilled = Array.from(document.querySelectorAll('input[name="fulfilled"]:checked')).map(cb => cb.value);
-
       const loseTime = Array.from(document.querySelectorAll('input[name="lose-time"]:checked')).map(cb => cb.value);
-
       const helpWith = Array.from(document.querySelectorAll('input[name="help-with"]:checked')).map(cb => cb.value);
 
-
-
       // Get slider weights
-
       const joyWeight = parseInt(document.getElementById("joy-slider").value);
-
       const goodAtWeight = parseInt(document.getElementById("good-at-slider").value);
-
       const worldNeedsWeight = parseInt(document.getElementById("world-needs-slider").value);
-
       const paidForWeight = parseInt(document.getElementById("paid-for-slider").value);
-
       const fulfilledWeight = parseInt(document.getElementById("fulfilled-slider").value);
-
       const loseTimeWeight = parseInt(document.getElementById("lose-time-slider").value);
-
       const helpWithWeight = parseInt(document.getElementById("help-with-slider").value);
 
-
-
       // Weighted scoring
-
       const joyScore = joy.length * joyWeight;
-
       const goodAtScore = goodAt.length * goodAtWeight;
-
       const worldNeedsScore = worldNeeds.length * worldNeedsWeight;
-
       const paidForScore = paidFor.length * paidForWeight;
-
       const fulfilledScore = fulfilled.length * fulfilledWeight;
-
       const loseTimeScore = loseTime.length * loseTimeWeight;
-
       const helpWithScore = helpWith.length * helpWithWeight;
-
-
 
       const totalScore = joyScore + goodAtScore + worldNeedsScore + paidForScore + fulfilledScore + loseTimeScore + helpWithScore;
 
-
-
       // Debugging: Check if totalScore is zero to prevent division by zero
-
       if (totalScore === 0) {
-
         alert("Please select at least one option in the quiz to calculate your Ikigai Score.");
-
         return;
-
       }
-
-
 
       document.getElementById("score").innerText = `Your Ikigai Score: ${totalScore}`;
 
-
-
       // Recommend top 3 applicable universals (logic-based)
-
       const recommendations = {
-
         art: ["Decorative art", "Dancing", "Music"],
-
         music: ["Dancing", "Decorative art", "Folklore"],
-
         nature: ["Ethno-botany", "Weather control", "Sustainability"],
-
         teaching: ["Education", "Ethics", "Government"],
-
         travel: ["Visiting", "Hospitality", "Community organisation"],
-
         writing: ["Folklore", "Language", "Education"],
-
         sports: ["Athletic sports", "Games", "Community organisation"],
-
         coding: ["Language", "Tool-making", "Innovation"],
-
         cooking: ["Cooking", "Family feasting", "Mealtimes"],
-
         "problem-solving": ["Law", "Government", "Ethics"],
-
         "public-speaking": ["Government", "Education", "Community organisation"],
-
         design: ["Bodily adornment", "Decorative art", "Tool-making"],
-
         sustainability: ["Weather control", "Ethno-botany", "Community organisation"],
-
         healthcare: ["Medicine", "Obstetrics", "Postnatal care"],
-
         community: ["Community organisation", "Hospitality", "Government"],
-
         innovation: ["Cosmology", "Tool-making", "Language"],
-
         equality: ["Ethics", "Government", "Law"],
-
         consulting: ["Government", "Ethics", "Education"],
-
         coaching: ["Ethics", "Education", "Government"],
-
         engineering: ["Tool-making", "Language", "Innovation"],
-
         marketing: ["Trade", "Government", "Community organisation"],
-
         "helping-others": ["Community organisation", "Ethics", "Government"],
-
         creating: ["Decorative art", "Tool-making", "Innovation"],
-
         learning: ["Education", "Language", "Cosmology"],
-
         exploring: ["Visiting", "Hospitality", "Community organisation"],
-
         connecting: ["Community organisation", "Hospitality", "Government"],
-
         "solving-problems": ["Law", "Government", "Ethics"],
-
         reading: ["Language", "Education", "Folklore"],
-
         painting: ["Decorative art", "Dancing", "Music"],
-
         gaming: ["Games", "Community organisation", "Innovation"],
-
         advice: ["Ethics", "Government", "Education"],
-
         organizing: ["Community organisation", "Government", "Law"],
-
         "technical-help": ["Tool-making", "Language", "Innovation"]
-
       };
 
-
-
       const userSelections = [...joy, ...goodAt, ...worldNeeds, ...paidFor, ...fulfilled, ...loseTime, ...helpWith];
-
       const applicableUniversals = userSelections
-
         .map(choice => recommendations[choice] || [])
-
         .flat();
 
-
-
       // Count occurrences of each universal
-
       const universalCounts = {};
-
       applicableUniversals.forEach(universal => {
-
         universalCounts[universal] = (universalCounts[universal] || 0) + 1;
-
       });
 
-
-
       // Sort universals by frequency and select top 3
-
       const topUniversals = Object.keys(universalCounts)
-
         .sort((a, b) => universalCounts[b] - universalCounts[a])
-
         .slice(0, 3);
-
-
 
       document.getElementById("recommendation").innerText = `Your Top 3 Recommended Universals:\n${topUniversals.join(", ")}`;
 
-
-
       // Calculate time allocation percentages
-
       const totalWeight = totalScore;
-
       const joyPercentage = Math.round((joyScore / totalWeight) * 100);
-
       const goodAtPercentage = Math.round((goodAtScore / totalWeight) * 100);
-
       const worldNeedsPercentage = Math.round((worldNeedsScore / totalWeight) * 100);
-
       const paidForPercentage = Math.round((paidForScore / totalWeight) * 100);
-
       const fulfilledPercentage = Math.round((fulfilledScore / totalWeight) * 100);
-
       const loseTimePercentage = Math.round((loseTimeScore / totalWeight) * 100);
-
       const helpWithPercentage = Math.round((helpWithScore / totalWeight) * 100);
 
-
-
       document.getElementById("time-allocation").innerHTML = `
-
         <p>Based on your Ikigai score, here's how you might redistribute your time:</p>
-
         <ul>
-
           <li><strong>What brings you joy:</strong> ${joyPercentage}%</li>
-
           <li><strong>What you're good at:</strong> ${goodAtPercentage}%</li>
-
           <li><strong>What the world needs:</strong> ${worldNeedsPercentage}%</li>
-
           <li><strong>What you can be paid for:</strong> ${paidForPercentage}%</li>
-
           <li><strong>What makes you feel fulfilled:</strong> ${fulfilledPercentage}%</li>
-
           <li><strong>What makes you lose track of time:</strong> ${loseTimePercentage}%</li>
-
           <li><strong>What people ask you for help with:</strong> ${helpWithPercentage}%</li>
-
         </ul>
-
       `;
 
-
-
       // Save results to local storage
-
       localStorage.setItem("ikigaiScore", totalScore);
-
       localStorage.setItem("ikigaiRecommendation", topUniversals.join(", "));
-
       localStorage.setItem("timeAllocation", JSON.stringify({
-
         joy: joyPercentage,
-
         goodAt: goodAtPercentage,
-
         worldNeeds: worldNeedsPercentage,
-
         paidFor: paidForPercentage,
-
         fulfilled: fulfilledPercentage,
-
         loseTime: loseTimePercentage,
-
         helpWith: helpWithPercentage
-
       }));
 
-
-
       // Update or create the pie chart
-
       const ctx = document.getElementById("ikigaiChart").getContext("2d");
-
       if (ikigaiChart) {
-
         ikigaiChart.destroy();
-
       }
-
       ikigaiChart = new Chart(ctx, {
-
         type: "pie",
-
         data: {
-
           labels: ["Joy", "Good At", "World Needs", "Paid For", "Fulfilled", "Lose Time", "Help With"],
-
           datasets: [{
-
             data: [joyScore, goodAtScore, worldNeedsScore, paidForScore, fulfilledScore, loseTimeScore, helpWithScore],
-
             backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#FFCD56"],
-
           }]
-
         },
-
         options: {
-
           responsive: true,
-
           plugins: {
-
             legend: { position: "bottom" },
-
             tooltip: {
-
               callbacks: {
-
                 label: function (context) {
-
                   const label = context.label || "";
-
                   const value = context.raw || 0;
-
                   return `${label}: ${value} points`;
-
                 }
-
               }
-
             }
-
           }
-
         }
-
       });
-
     });
-
-
 
     // Load saved results
-
     window.addEventListener("load", function () {
-
       const savedScore = localStorage.getItem("ikigaiScore");
-
       const savedRecommendation = localStorage.getItem("ikigaiRecommendation");
-
       const savedTimeAllocation = JSON.parse(localStorage.getItem("timeAllocation"));
-
       if (savedScore && savedRecommendation && savedTimeAllocation) {
-
         document.getElementById("score").innerText = `Your Ikigai Score: ${savedScore}`;
-
         document.getElementById("recommendation").innerText = `Your Top 3 Recommended Universals:\n${savedRecommendation}`;
-
         document.getElementById("time-allocation").innerHTML = `
-
           <p>Based on your Ikigai score, here's how you might redistribute your time:</p>
-
           <ul>
-
             <li><strong>What brings you joy:</strong> ${savedTimeAllocation.joy}%</li>
-
             <li><strong>What you're good at:</strong> ${savedTimeAllocation.goodAt}%</li>
-
             <li><strong>What the world needs:</strong> ${savedTimeAllocation.worldNeeds}%</li>
-
             <li><strong>What you can be paid for:</strong> ${savedTimeAllocation.paidFor}%</li>
-
             <li><strong>What makes you feel fulfilled:</strong> ${savedTimeAllocation.fulfilled}%</li>
-
             <li><strong>What makes you lose track of time:</strong> ${savedTimeAllocation.loseTime}%</li>
-
             <li><strong>What people ask you for help with:</strong> ${savedTimeAllocation.helpWith}%</li>
-
           </ul>
-
         `;
-
       }
-
     });
-
-
 
     // Save Results
-
     document.getElementById("save-results").addEventListener("click", function () {
-
       const score = document.getElementById("score").innerText;
-
       const recommendation = document.getElementById("recommendation").innerText;
-
       const timeAllocation = document.getElementById("time-allocation").innerText;
-
       alert(`Results saved to local storage:\n${score}\n${recommendation}\n${timeAllocation}`);
-
     });
-
-
 
     // Share Results
-
     document.getElementById("share-results").addEventListener("click", function () {
-
       const score = document.getElementById("score").innerText;
-
       const recommendation = document.getElementById("recommendation").innerText;
-
       const timeAllocation = document.getElementById("time-allocation").innerText;
-
       const shareText = `My Ikigai Results:\n${score}\n${recommendation}\n${timeAllocation}\nFind your Ikigai at ${window.location.href}`;
-
       if (navigator.share) {
-
         navigator.share({ title: "My Ikigai Results", text: shareText });
-
       } else {
-
         alert(`Share these results:\n${shareText}`);
-
       }
-
     });
-
   </script>
-
 </body>
-
 </html>
